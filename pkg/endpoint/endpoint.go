@@ -63,6 +63,7 @@ import (
 	meta_v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/rest"
 
+	"github.com/cilium/cilium/pkg/metrics"
 	"github.com/sirupsen/logrus"
 )
 
@@ -2110,14 +2111,18 @@ func (e *Endpoint) UpdateProxyStatistics(l7Protocol string, port uint16, ingress
 	}
 
 	stats.Received++
+	metrics.ProxyReceived.Inc()
 
 	switch verdict {
 	case accesslog.VerdictForwarded:
 		stats.Forwarded++
+		metrics.ProxyForwarded.Inc()
 	case accesslog.VerdictDenied:
 		stats.Denied++
+		metrics.ProxyDenied.Inc()
 	case accesslog.VerdictError:
 		stats.Error++
+		metrics.ProxyParseErrors.Inc()
 	}
 }
 
