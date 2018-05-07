@@ -129,6 +129,32 @@ var (
 		Help:        "Last timestamp when we received an event",
 		ConstLabels: prometheus.Labels{"source": LabelEventSourceAPI},
 	})
+
+	// Proxy statistics
+	// ProxyImportErrors is a count of failed parse errors on proxy
+	ProxyParseErrors = prometheus.NewCounter(prometheus.CounterOpts{
+		Namespace: Namespace,
+		Name:      "proxy_parse_errors",
+		Help:      "Number of times a proxy parse error occured",
+	})
+
+	ProxyForwarded = prometheus.NewCounter(prometheus.CounterOpts{
+		Namespace: Namespace,
+		Name:      "proxy_messages_forwarded",
+		Help:      "Number of times proxy request/response was forwarded",
+	})
+
+	ProxyDenied = prometheus.NewCounter(prometheus.CounterOpts{
+		Namespace: Namespace,
+		Name:      "proxy_messages_denied",
+		Help:      "Number of times proxy request/response was denied",
+	})
+
+	ProxyReceived = prometheus.NewCounter(prometheus.CounterOpts{
+		Namespace: Namespace,
+		Name:      "proxy_messages_received",
+		Help:      "Number of times proxy request/response was received",
+	})
 )
 
 func init() {
